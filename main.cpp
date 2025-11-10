@@ -1,5 +1,5 @@
 // CSCI-40 Final Project
-// Author: [Your Name Here]
+// Author: Vincent Vargas
 
 /* 
  * Description:
