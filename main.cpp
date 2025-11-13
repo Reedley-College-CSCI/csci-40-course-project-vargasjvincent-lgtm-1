@@ -13,6 +13,7 @@
 #include <string>
 using namespace std;
 
+const int MAX_ENTRIES = 100;
 // struct to hold each seasons stats
 struct SeasonStats {
     int year;
@@ -24,8 +25,12 @@ struct SeasonStats {
     string playoffSuccess;
 };
 
-int main() {
+int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES); //function to read data from file into array of structs
 
+int main() {
+SeasonStats cowboysStats[MAX_ENTRIES];
+cout << "Hi" << endl;
+cout << readStats(cowboysStats, MAX_ENTRIES);
 
 
 
@@ -35,3 +40,25 @@ int main() {
 
     return 0;
 }
+
+int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
+    ifstream inputFile ("cowboys_stats.txt");
+
+    if(!inputFile) {
+        cout << "Error, could not open file :(" << endl;
+        return -1;
+    }
+    int numEntries = 0;
+    while (numEntries < MAX_ENTRIES && inputFile 
+        >> cowboysStats[numEntries].year 
+        >> cowboysStats[numEntries].wins 
+        >> cowboysStats[numEntries].losses
+        >> cowboysStats[numEntries].ties 
+        >> cowboysStats[numEntries].ppg 
+        >> cowboysStats[numEntries].oppPpg) {
+        getline(inputFile >> ws, cowboysStats[numEntries].playoffSuccess);
+        numEntries++;
+    }
+    inputFile.close();
+    return numEntries;
+    }
