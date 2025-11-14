@@ -13,7 +13,6 @@
 #include <string>
 using namespace std;
 
-const int MAX_ENTRIES = 100;
 // struct to hold each seasons stats
 struct SeasonStats {
     int year;
@@ -26,11 +25,14 @@ struct SeasonStats {
 };
 
 int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES); //function to read data from file into array of structs
+void printAllStats(SeasonStats cowboysStats[], int entries);  //function to print all data cuurently in SeasonStats struct
 
 int main() {
+const int MAX_ENTRIES = 100;
 SeasonStats cowboysStats[MAX_ENTRIES];
 cout << "Hi" << endl;
-cout << readStats(cowboysStats, MAX_ENTRIES);
+int entries = readStats(cowboysStats, MAX_ENTRIES);
+printAllStats(cowboysStats, entries);
 
 
 
@@ -61,4 +63,21 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     }
     inputFile.close();
     return numEntries;
+    }
+
+    void printAllStats(SeasonStats cowboysStats[], int entries) {
+        cout << "================ Dallas Cowboys Total Seasons Stats ================" << "\n\n";
+        cout << left;
+        cout << "|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << setw(10) << cowboysStats[i].year
+             << setw(10) << cowboysStats[i].wins
+             << setw(10) << cowboysStats[i].losses
+             << setw(10) << cowboysStats[i].ties
+             << setw(13) << cowboysStats[i].ppg
+             << setw(13) << cowboysStats[i].oppPpg
+             << setw(35) << cowboysStats[i].playoffSuccess 
+             << endl;
+        }
     }
