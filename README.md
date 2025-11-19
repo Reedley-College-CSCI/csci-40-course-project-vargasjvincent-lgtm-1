@@ -22,7 +22,37 @@ Key Features:
 ## 3. Testing Summary
 - **Structured Testing Log:** Include a table with test cases, expected output, actual output, and pass/fail status.  
 - What testing methods did you use?  
-- Provide examples of test inputs (valid and invalid) and describe how your program responds.  
+- Provide examples of test inputs (valid and invalid) and describe how your program responds. 
+
+TC-01
+Description: Compare 2 seasons
+Input: 2007 2023
+Expected Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2007      13        3         0         28.4         20.3         Lost Divisional Round              
+2023      12        5         0         29.9         18.5         Lost Wild Card Round  
+Actual Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2024      7         10        0         20.6         27.5         Missed Playoffs                    
+2024      7         10        0         20.6         27.5         Missed Playoffs  
+
+Pass/Fail: F
+
+TC-02
+Description: Compare 2 seasons
+Input: 2007 2023
+Expected Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2007      13        3         0         28.4         20.3         Lost Divisional Round              
+2023      12        5         0         29.9         18.5         Lost Wild Card Round  
+Actual Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2007      13        3         0         28.4         20.3         Lost Divisional Round              
+2023      12        5         0         29.9         18.5         Lost Wild Card Round   
+
+Pass/Fail: P
+
+
 
 ---
 
