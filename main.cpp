@@ -29,6 +29,7 @@ void printAllStats(SeasonStats cowboysStats[], int entries);  //function to prin
 int findUserSeason(SeasonStats cowboysStats[], int entries, int year); // chose to make this function to call it in other functions to find what 
 //seaons they want to compare, better than doing it over and over in different functions
 void compare2Seasons(SeasonStats cowboysStats[], int entries); // function to compare two seasons, uses findUser season to find desired seasons 
+int convertPlayoffSuccess(const string playoffResult); // function to convert playoff success into integer value to make easier to compare
 
 int main() {
 const int MAX_ENTRIES = 100;
@@ -95,19 +96,41 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
         return -1; // year not found
     }
 
+    int convertPlayoffSuccess(const string playoffResult) {
+        if (playoffResult == "Missed Playoffs") return 1;
+        if (playoffResult == "Lost Wildcard Round") return 2;
+        if (playoffResult == "Lost Divisional Round") return 3;
+        if (playoffResult == "Lost Conference Championship") return 4;
+        if (playoffResult == "Lost Superbowl") return 5;
+        if (playoffResult == "Won Superbowl") return 6;
+        return -1;
+    }
+
     void compare2Seasons(SeasonStats cowboysStats[], int entries) {
         int year1;
         int year2;
         int season1;
         int season2;
 
-        cout << "Great! You want to compare 2 seasons of the Dallas Cowboys." << endl;
-
+        cout << "\nGreat! You want to compare 2 seasons of the Dallas Cowboys." << endl;
+      
+        // big while loop to validate the years that the user enters, makes sure the years exist 
+        // or if they entered the same year
         while (true) {
-             cout << "Enter the year of first season (2005-2024): ";
-             cin >> year1;
+             cout << "\n\nEnter the year of first season (2005-2024): ";
+             if (!(cin >> year1)) {
+             cin.clear();
+             cin.ignore(1000, '\n');
+             cout << "Try again, please enter a year in data (2005-2024)" << endl;
+             continue;
+            }
              cout << "\nOkay, now the year of the other season (2005-2024):  ";
-             cin >> year2;
+             if (!(cin >> year2)) {
+             cin.clear();
+             cin.ignore(1000, '\n');
+             cout << "Try again, please enter a year in data (2005-2024)" << endl;
+             continue;
+            }
              season1 = findUserSeason(cowboysStats, entries, year1);
              season2 = findUserSeason(cowboysStats, entries, year2);
 
@@ -116,14 +139,14 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
                 continue;
              }
 
-             if (year1 == year2) {
+             if (season1 == season2) {
                 cout << "You entered the same year, try again." << endl;
                 continue;
              }
              break;     
         }
 
-        cout << "Here is your comparasion report!" << endl;
+        cout << "\nHere is your comparasion report!\n " << endl;
         cout << left;
         cout << "|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|" << endl;
         cout << setw(10) << cowboysStats[season1].year
@@ -143,6 +166,104 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
              << setw(13) << cowboysStats[season2].oppPpg
              << setw(35) << cowboysStats[season2].playoffSuccess 
              << endl;
-    
+
+             int winsDifference;
+             int lossDifference;
+             int tiesDifference;
+             double ppgDifference;
+             double oppPpgDifference;
+
+             cout << "\nMore in depth analysis:\n";
+             if (cowboysStats[season1].wins > cowboysStats[season2].wins) {
+             winsDifference = cowboysStats[season1].wins - cowboysStats[season2].wins;
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had " << winsDifference
+             << " more win/wins than in  " << cowboysStats[season2].year << "\n\n";
+             }
+             else if (cowboysStats[season1].wins < cowboysStats[season2].wins) {
+             winsDifference = cowboysStats[season2].wins - cowboysStats[season1].wins;
+             cout << "In " << cowboysStats[season2].year << " the Cowboys had " << winsDifference
+             << " more win/wins than in  " << cowboysStats[season1].year << "\n\n";
+             }
+             else if (cowboysStats[season1].wins == cowboysStats[season2].wins) {
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had the same amount of wins";
+             cout << " as in " << cowboysStats[season2].year << "\n\n";
+             }
+             if (cowboysStats[season1].losses > cowboysStats[season2].losses) {
+             lossDifference = cowboysStats[season1].losses - cowboysStats[season2].losses;
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had " << lossDifference
+             << " more loss/losses than in  " << cowboysStats[season2].year << "\n\n";
+             }
+             else if (cowboysStats[season1].losses < cowboysStats[season2].losses) {
+             lossDifference = cowboysStats[season2].losses - cowboysStats[season1].losses;
+             cout << "In " << cowboysStats[season2].year << " the Cowboys had " << lossDifference
+             << " more loss/losses than in  " << cowboysStats[season1].year << "\n\n";
+             }
+             else if (cowboysStats[season1].losses == cowboysStats[season2].losses) {
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had the same amount of losses";
+             cout << " as in " << cowboysStats[season2].year << "\n\n";
+             }
+              if (cowboysStats[season1].ties > cowboysStats[season2].ties) {
+             tiesDifference = cowboysStats[season1].ties - cowboysStats[season2].ties;
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had " << tiesDifference
+             << " more tie/ties than in  " << cowboysStats[season2].year << "\n\n";
+             }
+             else if (cowboysStats[season1].ties < cowboysStats[season2].ties) {
+             tiesDifference = cowboysStats[season2].ties - cowboysStats[season1].ties;
+             cout << "In " << cowboysStats[season2].year << " the Cowboys had " << tiesDifference
+             << " more tie/ties than in  " << cowboysStats[season1].year << "\n\n";
+             }
+             else if (cowboysStats[season1].ties == cowboysStats[season2].ties) {
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had the same amount of ties";
+             cout << " as in " << cowboysStats[season2].year << "\n\n";
+             }
+              if (cowboysStats[season1].ppg > cowboysStats[season2].ppg) {
+             ppgDifference = cowboysStats[season1].ppg - cowboysStats[season2].ppg;
+             cout << "In " << cowboysStats[season1].year << " the Cowboys averaged " << ppgDifference
+             << " more PPG than in  " << cowboysStats[season2].year << "\n\n";
+             }
+             else if (cowboysStats[season1].ppg < cowboysStats[season2].ppg) {
+             ppgDifference = cowboysStats[season2].ppg - cowboysStats[season1].ppg;
+              cout << "In " << cowboysStats[season2].year << " the Cowboys averaged " << ppgDifference
+             << " more PPG than in  " << cowboysStats[season1].year << "\n\n";
+             }
+             else if (cowboysStats[season1].ppg == cowboysStats[season2].ppg) {
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had the same PPG";
+             cout << " as in " << cowboysStats[season2].year << "\n\n";
+             }
+             if (cowboysStats[season1].oppPpg > cowboysStats[season2].oppPpg) {
+             oppPpgDifference = cowboysStats[season1].oppPpg - cowboysStats[season2].oppPpg;
+             cout << "In " << cowboysStats[season1].year << " the Cowboys averaged " << oppPpgDifference
+             << " more OPP PPG than in  " << cowboysStats[season2].year << "\n\n";
+             }
+             else if (cowboysStats[season1].oppPpg < cowboysStats[season2].oppPpg) {
+             oppPpgDifference = cowboysStats[season2].oppPpg - cowboysStats[season1].oppPpg;
+             cout << "In " << cowboysStats[season2].year << " the Cowboys averaged " << oppPpgDifference
+             << " more OPP PPG than in  " << cowboysStats[season1].year << "\n\n";
+             }
+             else if (cowboysStats[season1].oppPpg == cowboysStats[season2].oppPpg) {
+             cout << "In " << cowboysStats[season1].year << " the Cowboys had the same  OPP PPG";
+             cout << " as in " << cowboysStats[season2].year << "\n\n";    
     }
-             
+    
+    int playoffsSzn1 = convertPlayoffSuccess(cowboysStats[season1].playoffSuccess);
+    int playoffsSzn2 = convertPlayoffSuccess(cowboysStats[season2].playoffSuccess);
+
+    if (playoffsSzn1 > playoffsSzn2) {
+        cout << "The Cowboys advanced farther in the playoffs in  " << cowboysStats[season1].year
+        << " than in " << cowboysStats[season2].year << endl;
+    }
+    else if (playoffsSzn2 > playoffsSzn1) {
+        cout << "The Cowboys advanced farther in the playoffs in  " << cowboysStats[season2].year
+        << " than in " << cowboysStats[season1].year << endl;
+    }
+    else if (playoffsSzn1 == playoffsSzn2) {
+        cout << "The Cowboys had the same amount of playoff success in " << cowboysStats[season1].year
+        << " and " << cowboysStats[season2].year << endl;
+    }
+    else if (playoffsSzn1 == 1 && playoffsSzn2 == 1) {
+        cout << "The Cowboys did not make the playoffs in " << cowboysStats[season1].year
+        << " or " << cowboysStats[season2].year << ":(" << endl;
+    }
+cout << endl;
+}
+           
