@@ -27,9 +27,11 @@ struct SeasonStats {
 int readStats(SeasonStats cowboysStats[], const int MAX_ENTRIES); //function to read data from file into array of structs
 void printAllStats(SeasonStats cowboysStats[], int entries);  //function to print all data cuurently in SeasonStats struct
 int findUserSeason(SeasonStats cowboysStats[], int entries, int year); // chose to make this function to call it in other functions to find what 
-//seaons they want to compare, better than doing it over and over in different functions
+//seaons they want to compare, better than doing it over and over in different functions, uses LINEAR SEARCH
 void compare2Seasons(SeasonStats cowboysStats[], int entries); // function to compare two seasons, uses findUser season to find desired seasons 
 int convertPlayoffSuccess(const string playoffResult); // function to convert playoff success into integer value to make easier to compare
+void selectionSortWins(SeasonStats cowboysStats[], int entries); // function to sort all seasons by wins and prints them in order
+
 
 int main() {
 const int MAX_ENTRIES = 100;
@@ -37,8 +39,8 @@ SeasonStats cowboysStats[MAX_ENTRIES];
 cout << "Hi" << endl;
 int entries = readStats(cowboysStats, MAX_ENTRIES);
 //printAllStats(cowboysStats, entries);
-compare2Seasons(cowboysStats, entries);
-
+//compare2Seasons(cowboysStats, entries);
+selectionSortWins(cowboysStats, entries);
 
 
 
@@ -71,23 +73,30 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     }
 
     void printAllStats(SeasonStats cowboysStats[], int entries) {
-        cout << "================ Dallas Cowboys Total Seasons Stats ================" << "\n\n";
+        cout << "*******************************************************************************************" 
+        << "*************\n";
+        cout << "*\n* ================ Dallas Cowboys Total Seasons Stats ================                                 *";
+        cout << "\n*" << setw(103) << "*"
+        << "\n*                                                                                                      *";
         cout << left;
-        cout << "|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|" << endl;
+        cout << "\n* |Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|"
+        << "                   *" << endl;
 
         for(int i = 0; i < entries; ++i) {
-            cout << setw(10) << cowboysStats[i].year
+            cout << "* " << setw(10) << cowboysStats[i].year
              << setw(10) << cowboysStats[i].wins
              << setw(10) << cowboysStats[i].losses
              << setw(10) << cowboysStats[i].ties
              << setw(13) << cowboysStats[i].ppg
              << setw(13) << cowboysStats[i].oppPpg
-             << setw(35) << cowboysStats[i].playoffSuccess 
+             << setw(35) << cowboysStats[i].playoffSuccess << setw(2) << "*"
              << endl;
         }
+         cout << "*******************************************************************************************" 
+         << "*************\n";
     }
 
-    int findUserSeason(SeasonStats cowboysStats[], int entries, int year) {
+    int findUserSeason(SeasonStats cowboysStats[], int entries, int year) { // linear seach !
         for (int i = 0; i < entries; i++) {
             if (cowboysStats[i].year == year) {
                 return i;
@@ -146,26 +155,38 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
              break;     
         }
 
-        cout << "\nHere is your comparasion report!\n " << endl;
+        cout << "\nHere is your comparison report!\n " << endl;
+         cout << "*******************************************************************************************" 
+        << "*************\n";
+        cout << "*" << setw(103) << "*"
+        << "\n* ====================== " << cowboysStats[season1].year << " and " << cowboysStats[season2].year
+        << " Comparison Report ===============================" << setw(22) << "*";
+        cout << "\n*" << setw(103) << "*"
+        << "\n*                                                                                                      *";
         cout << left;
-        cout << "|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|" << endl;
-        cout << setw(10) << cowboysStats[season1].year
+        cout << "\n* |Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|"
+        << "                   *" << endl;
+
+       
+            cout << "* " << setw(10) << cowboysStats[season1].year
              << setw(10) << cowboysStats[season1].wins
              << setw(10) << cowboysStats[season1].losses
              << setw(10) << cowboysStats[season1].ties
              << setw(13) << cowboysStats[season1].ppg
              << setw(13) << cowboysStats[season1].oppPpg
-             << setw(35) << cowboysStats[season1].playoffSuccess 
+             << setw(35) << cowboysStats[season1].playoffSuccess << setw(2) << "*"
              << endl;
-
-             cout << setw(10) << cowboysStats[season2].year
+              cout << "* " << setw(10) << cowboysStats[season2].year
              << setw(10) << cowboysStats[season2].wins
              << setw(10) << cowboysStats[season2].losses
              << setw(10) << cowboysStats[season2].ties
              << setw(13) << cowboysStats[season2].ppg
              << setw(13) << cowboysStats[season2].oppPpg
-             << setw(35) << cowboysStats[season2].playoffSuccess 
+             << setw(35) << cowboysStats[season2].playoffSuccess << setw(2) << "*"
              << endl;
+         cout << "*******************************************************************************************" 
+         << "*************\n";
+       
 
              int winsDifference;
              int lossDifference;
@@ -266,4 +287,56 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     }
 cout << endl;
 }
-           
+
+void selectionSortWins(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].wins > cowboysStats[minIndex].wins) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+    cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*" << setw(45) << "*";
+        cout << left;
+        cout << "\n* |Year|                |WINS|" << "               *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].wins
+            << setw(22) << "*"
+             << endl;
+        }
+         cout << "**********************************************\n";
+    }
+
+     /*cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*                                                                                                      *";
+        cout << left;
+        cout << "\n* |Year|                |WINS|"
+        << "                   *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(10) << cowboysStats[i].year << setw(45) << cowboysStats[i].wins
+            << setw(2) << "*"
+             << endl;
+        }
+         cout << "**********************************************\n";
+    }
+*/
+          

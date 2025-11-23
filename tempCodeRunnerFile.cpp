@@ -1,1 +1,1 @@
-compare2Seasons(cowboysStats, entries);
+y
