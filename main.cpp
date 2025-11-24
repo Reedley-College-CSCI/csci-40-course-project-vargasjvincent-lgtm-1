@@ -31,7 +31,11 @@ int findUserSeason(SeasonStats cowboysStats[], int entries, int year); // chose 
 void compare2Seasons(SeasonStats cowboysStats[], int entries); // function to compare two seasons, uses findUser season to find desired seasons 
 int convertPlayoffSuccess(const string playoffResult); // function to convert playoff success into integer value to make easier to compare
 void selectionSortWins(SeasonStats cowboysStats[], int entries); // function to sort all seasons by wins and prints them in order
-
+void selectionSortLosses(SeasonStats cowboysStats[], int entries); // function to sort all seasons by losses and prints them in order
+void selectionSortTies(SeasonStats cowboysStats[], int entries); // function to sort all seasons by ties and prints them in order
+void selectionSortPpg(SeasonStats cowboysStats[], int entries); // function to sort all seasons by PPG and prints them in order
+void selectionSortoppPpg(SeasonStats cowboysStats[], int entries); // function to sort all seasons by OPP PPG and prints them in order
+void selectionSortplayoffSuccess(SeasonStats cowboysStats[], int entries); // function to sort all seasons by playoff success and prints them in order
 
 int main() {
 const int MAX_ENTRIES = 100;
@@ -40,9 +44,11 @@ cout << "Hi" << endl;
 int entries = readStats(cowboysStats, MAX_ENTRIES);
 //printAllStats(cowboysStats, entries);
 //compare2Seasons(cowboysStats, entries);
-selectionSortWins(cowboysStats, entries);
-
-
+//selectionSortWins(cowboysStats, entries);
+//selectionSortLosses(cowboysStats, entries);
+//selectionSortTies(cowboysStats, entries);
+//selectionSortPpg(cowboysStats, entries);
+selectionSortoppPpg(cowboysStats, entries);
 
 
 
@@ -322,21 +328,191 @@ void selectionSortWins(SeasonStats cowboysStats[], int entries) {
          cout << "**********************************************\n";
     }
 
-     /*cout << "**********************************************\n";
-        cout << "*" << setw(45) << "*"
-        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
-        cout << "\n*" << setw(45) << "*"
-        << "\n*                                                                                                      *";
+    void selectionSortLosses(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].losses > cowboysStats[minIndex].losses) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+    cout << "************************************************\n";
+        cout << "*" << setw(47) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Losses ===== *";  //<< setw(2) << "*";
+        cout << "\n*" << setw(47) << "*"
+        << "\n*" << setw(47) << "*";
         cout << left;
-        cout << "\n* |Year|                |WINS|"
-        << "                   *" << endl;
+        cout << "\n* |Year|               |LOSSES|" << "                *" << endl;
 
         for(int i = 0; i < entries; ++i) {
-            cout << "* " << setw(10) << cowboysStats[i].year << setw(45) << cowboysStats[i].wins
-            << setw(2) << "*"
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(21) << cowboysStats[i].losses
+            << setw(23) << "*"
+             << endl;
+        }
+         cout << "************************************************\n";
+    }
+
+    void selectionSortTies(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].ties > cowboysStats[minIndex].ties) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+
+    int allTimeTies = 0;
+
+    for(int j = 0; j < entries; j++) {
+        allTimeTies = allTimeTies + cowboysStats[j].ties;
+    }
+    
+    if (allTimeTies == 0) {
+        cout << "\nFor the current data (2005-2024), there have been 0 total ties across all seasons\n";
+    }
+
+    else if (allTimeTies > 0) {
+    cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Ties =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*" << setw(45) << "*";
+        cout << left;
+        cout << "\n* |Year|                |TIES|" << "               *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].wins
+            << setw(22) << "*"
              << endl;
         }
          cout << "**********************************************\n";
     }
-*/
+    }
+
+    void selectionSortPpg(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].ppg > cowboysStats[minIndex].ppg) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+    cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*" << setw(45) << "*";
+        cout << left;
+        cout << "\n* |Year|                 |PPG|" << "               *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].ppg
+            << setw(22) << "*"
+             << endl;
+        }
+         cout << "**********************************************\n";
+    }
+
+    void selectionSortoppPpg(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].oppPpg < cowboysStats[minIndex].oppPpg) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+    cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*" << setw(45) << "*";
+        cout << left;
+        cout << "\n* |Year|                |OPP PPG|" << "            *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].oppPpg
+            << setw(22) << "*"
+             << endl;
+        }
+         cout << "**********************************************\n";
+    }
+
+    void selectionSortplayoffSuccess(SeasonStats cowboysStats[], int entries) {
+        int convertedPlayoffSuccess[entries];
+        int startScan, minIndex, i;
+
+    for(startScan = 0; startScan < (entries - 1); startScan++) {
+        cowboysStats.playoffSuccess[startScan] = 
+        minIndex = startScan;
+
+        for(i = startScan + 1; i < entries; i++) {
+            if (cowboysStats[i].ppg > cowboysStats[minIndex].ppg) {
+                minIndex = i;
+            }
+        }
+
+        SeasonStats temp = cowboysStats[minIndex];
+        cowboysStats[minIndex] = cowboysStats[startScan];
+        cowboysStats[startScan] = temp;
+        
+    }
+    cout << "**********************************************\n";
+        cout << "*" << setw(45) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        cout << "\n*" << setw(45) << "*"
+        << "\n*" << setw(45) << "*";
+        cout << left;
+        cout << "\n* |Year|                 |PPG|" << "               *" << endl;
+
+        for(int i = 0; i < entries; ++i) {
+            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].ppg
+            << setw(22) << "*"
+             << endl;
+        }
+         cout << "**********************************************\n";
+    }
+
+
+   
+ 
           
