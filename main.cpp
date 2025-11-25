@@ -34,8 +34,8 @@ void selectionSortWins(SeasonStats cowboysStats[], int entries); // function to 
 void selectionSortLosses(SeasonStats cowboysStats[], int entries); // function to sort all seasons by losses and prints them in order
 void selectionSortTies(SeasonStats cowboysStats[], int entries); // function to sort all seasons by ties and prints them in order
 void selectionSortPpg(SeasonStats cowboysStats[], int entries); // function to sort all seasons by PPG and prints them in order
-void selectionSortoppPpg(SeasonStats cowboysStats[], int entries); // function to sort all seasons by OPP PPG and prints them in order
-void selectionSortplayoffSuccess(SeasonStats cowboysStats[], int entries); // function to sort all seasons by playoff success and prints them in order
+void selectionSortOppPpg(SeasonStats cowboysStats[], int entries); // function to sort all seasons by OPP PPG and prints them in order
+void selectionSortPlayoffSuccess(SeasonStats cowboysStats[], int entries); // function to sort all seasons by playoff success and prints them in order
 
 int main() {
 const int MAX_ENTRIES = 100;
@@ -48,8 +48,8 @@ int entries = readStats(cowboysStats, MAX_ENTRIES);
 //selectionSortLosses(cowboysStats, entries);
 //selectionSortTies(cowboysStats, entries);
 //selectionSortPpg(cowboysStats, entries);
-selectionSortoppPpg(cowboysStats, entries);
-
+//selectionSortoppPpg(cowboysStats, entries);
+selectionSortPlayoffSuccess(cowboysStats, entries);
 
 
 
@@ -113,7 +113,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
 
     int convertPlayoffSuccess(const string playoffResult) {
         if (playoffResult == "Missed Playoffs") return 1;
-        if (playoffResult == "Lost Wildcard Round") return 2;
+        if (playoffResult == "Lost Wild Card Round") return 2;
         if (playoffResult == "Lost Divisional Round") return 3;
         if (playoffResult == "Lost Conference Championship") return 4;
         if (playoffResult == "Lost Superbowl") return 5;
@@ -443,7 +443,7 @@ void selectionSortWins(SeasonStats cowboysStats[], int entries) {
          cout << "**********************************************\n";
     }
 
-    void selectionSortoppPpg(SeasonStats cowboysStats[], int entries) {
+    void selectionSortOppPpg(SeasonStats cowboysStats[], int entries) {
     
     int startScan, minIndex, i;
 
@@ -477,16 +477,21 @@ void selectionSortWins(SeasonStats cowboysStats[], int entries) {
          cout << "**********************************************\n";
     }
 
-    void selectionSortplayoffSuccess(SeasonStats cowboysStats[], int entries) {
-        int convertedPlayoffSuccess[entries];
-        int startScan, minIndex, i;
+    void selectionSortPlayoffSuccess(SeasonStats cowboysStats[], int entries) {
+    
+    int startScan, minIndex, i;
 
     for(startScan = 0; startScan < (entries - 1); startScan++) {
-        cowboysStats.playoffSuccess[startScan] = 
         minIndex = startScan;
 
         for(i = startScan + 1; i < entries; i++) {
-            if (cowboysStats[i].ppg > cowboysStats[minIndex].ppg) {
+
+            //using convertPlayoffSuccess to convert strings to integers because sorting by 
+            //numbers is easier
+            int current = convertPlayoffSuccess(cowboysStats[i].playoffSuccess);
+            int best = convertPlayoffSuccess(cowboysStats[minIndex].playoffSuccess);
+
+            if (current > best) {
                 minIndex = i;
             }
         }
@@ -496,21 +501,23 @@ void selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
-    cout << "**********************************************\n";
-        cout << "*" << setw(45) << "*"
-        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
-        cout << "\n*" << setw(45) << "*"
-        << "\n*" << setw(45) << "*";
+    cout << "*********************************************************\n";
+        cout << "*" << setw(56) << "*"
+        << "\n* ===== Dallas Cowboys Seasons By Playoff Success =====" << setw(2) << "*";
+        cout << "\n*" << setw(56) << "*"
+        << "\n*" << setw(56) << "*";
         cout << left;
-        cout << "\n* |Year|                 |PPG|" << "               *" << endl;
+        cout << "\n* |Year|                |PLAYOFF SUCCESS|" << "               *" << endl;
 
         for(int i = 0; i < entries; ++i) {
-            cout << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].ppg
-            << setw(22) << "*"
+            cout << "* " << setw(20) << cowboysStats[i].year << setw(34) << cowboysStats[i].playoffSuccess
+            << setw(18) << "*"
              << endl;
         }
-         cout << "**********************************************\n";
+         cout << "* Hope to see a Superbowl soon :(                       *\n";
+         cout << "*********************************************************\n";
     }
+
 
 
    
