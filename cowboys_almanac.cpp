@@ -42,6 +42,9 @@ string selectionSortOppPpg(SeasonStats cowboysStats[], int entries); // function
 string selectionSortPlayoffSuccess(SeasonStats cowboysStats[], int entries); // function to sort all seasons by playoff success and prints them in order
 void addSeasonToData(SeasonStats cowboysStats[], int& entries); // function to add data do the data already stored in cowboys_stats.txt
 void saveToUserFile(const string& dataToSave); // function that makes a user file and stores desired data in it if user chooses
+void saveToCowboysData(SeasonStats cowboysStats[], int entries); // saves seasons that are added by user to cowboys_stats.txt
+
+
 
 int main() {
 const int MAX_ENTRIES = 100;
@@ -57,7 +60,7 @@ int entries = readStats(cowboysStats, MAX_ENTRIES);
 //selectionSortoppPpg(cowboysStats, entries);
 //selectionSortPlayoffSuccess(cowboysStats, entries);
 //viewOneSeason(cowboysStats, entries, 2007);
-//addSeasonToData(cowboysStats, entries);
+addSeasonToData(cowboysStats, entries);
 
 cout << printAllStats(cowboysStats, entries);
 
@@ -718,6 +721,9 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     }
      entries++;
 
+     // saves the new season to the rest of the data in cowboys_stats.txt
+     saveToCowboysData(cowboysStats, entries); 
+
      cout << "Season " << userYear << " successfully added to data!\n";
      cout << "Here is the data for the new season\n";
      cout << left;
@@ -752,10 +758,28 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         outFile.close();
 
         cout << "Data saved to your file! " << endl;
-
     }
 
-    
+    void saveToCowboysData(SeasonStats cowboysStats[], int entries) {
+        ofstream outFile("cowboys_stats.txt");
+
+        if (!outFile) {
+            cout << "Error opening file to add data!\n";
+            return;
+        }
+        //saves each new season in same format that the original 20 SZNS are saved in
+        for (int i = 0; i < entries; i++) {
+            outFile << cowboysStats[i].year << " "
+                    << cowboysStats[i].wins << " "
+                    << cowboysStats[i].losses << " "
+                    << cowboysStats[i].ties << " "
+                    << cowboysStats[i].ppg << " "
+                    << cowboysStats[i].oppPpg << " "
+                    << cowboysStats[i].playoffSuccess << " "
+                    << "\n";
+        }
+        outFile.close();
+    }
    
  
           
