@@ -52,6 +52,49 @@ Actual Output: Here is your comparasion report!
 
 Pass/Fail: P
 
+TC-03
+Description: Adding new season then calling sort playoff success
+Input: 4 1999 10 5 0 24.9 20.3 Missed Playoffs 5 6
+Expected Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2007      13        3         0         28.4         20.3         Lost Divisional Round              
+2023      12        5         0         29.9         18.5         Lost Wild Card Round  
+Actual Output: 
+*********************************************************
+*                                                       *
+* ===== Dallas Cowboys Seasons By Playoff Success ===== *
+*                                                       *
+*                                                       *
+* |Year|                |PLAYOFF SUCCESS|               *
+* 1999                Missed Playoffs                   *                 
+* 2023                Lost Wild Card Round              *                 
+* 2022                Lost Divisional Round             *                 
+* 2021                Lost Wild Card Round              *                 
+* 2020                Missed Playoffs                   *                 
+* 2019                Missed Playoffs                   *                 
+* 2018                Lost Divisional Round             *                 
+* 2017                Missed Playoffs                   *                 
+* 2016                Lost Divisional Round             *                 
+* 2015                Missed Playoffs                   *                 
+* 2014                Lost Divisional Round             *                 
+* 2013                Missed Playoffs                   *                 
+* 2012                Missed Playoffs                   *                 
+* 2011                Missed Playoffs                   *                 
+* 2010                Missed Playoffs                   *                 
+* 2009                Lost Divisional Round             *                 
+* 2008                Missed Playoffs                   *                 
+* 2007                Lost Divisional Round             *                 
+* 2006                Lost Wild Card Round              *                 
+* 2005                Missed Playoffs                   *                 
+* 2024                Missed Playoffs                   *                 
+* Hope to see a Superbowl soon :(                       *
+*********************************************************
+Would you like to save this data to your personal file? (Y/N)
+
+Pass/Fail: F
+Explanation: 1999 printed at the top of the list even though they missed the playoffs that year so it should actually be at the bottom of the list
+
+
 
 
 ---

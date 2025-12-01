@@ -27,7 +27,7 @@ struct SeasonStats {
 
 int readStats(SeasonStats cowboysStats[], const int MAX_ENTRIES); // function to read data from file into array of structs
 string printAllStats(SeasonStats cowboysStats[], int entries);  // function to print all data cuurently in SeasonStats struct
-string viewOneSeason(SeasonStats cowboysStats[], int entries, int year); // function to find one individual season and prints its stats
+string viewOneSeason(SeasonStats cowboysStats[], int entries); // function to find one individual season and prints its stats
 int findUserSeason(SeasonStats cowboysStats[], int entries, int year); // chose to make this function to call it in other functions to find what
 //seaons they want to compare, better than doing it over and over in different functions, uses LINEAR SEARCH
 int validateInt(const string &prompt, int minVal, int maxVal); // helper function to validate integer data
@@ -43,28 +43,143 @@ string selectionSortPlayoffSuccess(SeasonStats cowboysStats[], int entries); // 
 void addSeasonToData(SeasonStats cowboysStats[], int& entries); // function to add data do the data already stored in cowboys_stats.txt
 void saveToUserFile(const string& dataToSave); // function that makes a user file and stores desired data in it if user chooses
 void saveToCowboysData(SeasonStats cowboysStats[], int entries); // saves seasons that are added by user to cowboys_stats.txt
-
+void printMainMenu(); // function to print main menu, practical for being used in loop to prompt user 
+void printSubMenu(); // function to print sub menu, practical for being used in loop to prompt user
+void promptToSaveData(const string data); // function to ask user if they want to save data to their file, applicable in main menu
 
 
 int main() {
+
+
 const int MAX_ENTRIES = 100;
-SeasonStats cowboysStats[MAX_ENTRIES];
-cout << "Hi" << endl;
-int entries = readStats(cowboysStats, MAX_ENTRIES);
-//cout << printAllStats(cowboysStats, entries);
-//compare2Seasons(cowboysStats, entries);
-//selectionSortWins(cowboysStats, entries);
-//selectionSortLosses(cowboysStats, entries);
-//selectionSortTies(cowboysStats, entries);
-//selectionSortPpg(cowboysStats, entries);
-//selectionSortoppPpg(cowboysStats, entries);
-//selectionSortPlayoffSuccess(cowboysStats, entries);
-//viewOneSeason(cowboysStats, entries, 2007);
-addSeasonToData(cowboysStats, entries);
+SeasonStats cowboysStats[MAX_ENTRIES];   // array of structs, holds all the data
+int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST before doing anything else
+//addSeasonToData(cowboysStats, entries);
 
-cout << printAllStats(cowboysStats, entries);
+cout << selectionSortPlayoffSuccess(cowboysStats, entries);
 
-    return 0;
+int choice;
+//cout << selectionSortPlayoffSuccess(cowboysStats, entries);
+
+while (true) {
+    printMainMenu();
+    
+    cin >> choice;
+
+    if (choice < 1 || choice > 6) {    // this is for when user has invalid input
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Invalid choice, must be 1-6\n";
+        continue;
+    }
+
+    cin.ignore(1000, '\n');
+
+    switch (choice) {
+
+        case 1: {
+            string output = printAllStats(cowboysStats, entries);
+            cout << output;
+            promptToSaveData(output);
+            break;
+        }
+
+        case 2: {
+            string output = viewOneSeason(cowboysStats, entries);
+            cout << output;
+            promptToSaveData(output);
+            break;
+        }
+
+        case 3: {
+            string output = compare2Seasons(cowboysStats, entries);
+            cout << output;
+            promptToSaveData(output);
+            break;
+        }
+
+        case 4: {
+            addSeasonToData(cowboysStats, entries);
+            break;
+        }
+
+        case 5: {           // case 5 holds the enture submenu, contains another switch menu
+            bool inSubMenu = true;
+            int subMenuChoice;
+
+            while (inSubMenu) {
+                printSubMenu();
+                subMenuChoice = validateInt("Enter submenu choice: ", 1, 7);
+
+                switch(subMenuChoice) {
+
+                    case 1: {
+                       string output = selectionSortWins(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 2: {
+                       string output = selectionSortLosses(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 3: {
+                       string output = selectionSortTies(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 4: {
+                       string output = selectionSortPpg(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 5: {
+                       string output = selectionSortOppPpg(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 6: {
+                       string output = selectionSortPlayoffSuccess(cowboysStats, entries);
+                       cout << output;
+                       promptToSaveData(output);
+                       break;
+                    }
+
+                    case 7: {
+                       inSubMenu = false;
+                       break;
+                    }
+
+                    default: {
+                        cout << "Not a valid option\n";
+                    }
+                }
+            }
+            break;
+
+        }
+
+        case 6: {
+            cout << "Goodbye! Hope you made good use of the Dallas Cowboys Stats Sorter!\n";
+            return 0;
+        }
+
+        default:
+        cout << "Not a valid option\n";
+    }
+}
+
+return 0;
 }
 
 int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
@@ -177,27 +292,37 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
 
     }
 
-    string viewOneSeason(SeasonStats cowboysStats[], int entries, int year) {
+    string viewOneSeason(SeasonStats cowboysStats[], int entries) {
+        
+        stringstream output;
+        int userYear;
+        int userSeasonIndex;
 
-       stringstream output;
-       int userSeason = findUserSeason(cowboysStats, entries, year);
+        output << "Okay great! You want to view one season individually\n";
+        userYear = validateInt("Enter the year of the season you want to view: ", 1960, 2500);
+
+        userSeasonIndex = findUserSeason(cowboysStats, entries, userYear);
+
+        if (userSeasonIndex == -1) {
+            return string("That season is currently not in the database\n");
+        }
     
        output << left;
        output << "**********************************************\n";
        output << setw(45) << "*" << "*\n";
-       output << setw(18) << "*" << cowboysStats[userSeason].year  << setw(23) << "   Stats" << "*\n";
+       output << setw(18) << "*" << cowboysStats[userSeasonIndex].year  << setw(23) << "   Stats" << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* Wins -->" << setw(22) <<  cowboysStats[userSeason].wins << "*\n";
+       output << setw(24) << "\n* Wins -->" << setw(22) <<  cowboysStats[userSeasonIndex].wins << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* Losses -->" << setw(22) <<  cowboysStats[userSeason].losses << "*\n";
+       output << setw(24) << "\n* Losses -->" << setw(22) <<  cowboysStats[userSeasonIndex].losses << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* Ties -->" << setw(22) <<  cowboysStats[userSeason].ties << "*\n";
+       output << setw(24) << "\n* Ties -->" << setw(22) <<  cowboysStats[userSeasonIndex].ties << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* PPG -->" << setw(22) <<  cowboysStats[userSeason].ppg << "*\n";
+       output << setw(24) << "\n* PPG -->" << setw(22) <<  cowboysStats[userSeasonIndex].ppg << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* OPP PPG -->" << setw(22) << cowboysStats[userSeason].oppPpg << "*\n";
+       output << setw(24) << "\n* OPP PPG -->" << setw(22) << cowboysStats[userSeasonIndex].oppPpg << "*\n";
        output << setw(45) << "*" << "*";
-       output << setw(24) << "\n* Playoff Success -->" << cowboysStats[userSeason].playoffSuccess << " *\n";
+       output << "\n* Playoff Success -->" << setw(23) << cowboysStats[userSeasonIndex].playoffSuccess << " *\n";
        output << setw(45) << "*" << "*";
        output << "\n**********************************************\n";
        
@@ -215,41 +340,42 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     }
 
     string compare2Seasons(SeasonStats cowboysStats[], int entries) {
+
         stringstream output;
         int year1;
         int year2;
         int season1;
         int season2;
 
-        output << "\nGreat! You want to compare 2 seasons of the Dallas Cowboys." << endl;
+        cout << "\nGreat! You want to compare 2 seasons of the Dallas Cowboys." << endl;
       
         // big while loop to validate the years that the user enters, makes sure the years exist 
         // or if they entered the same year
         while (true) {
-             output << "\n\nEnter the year of first season (2005-2024): ";
+             cout << "\n\nEnter the year of first season (2005-2024): ";
              if (!(cin >> year1)) {
              cin.clear();
              cin.ignore(1000, '\n');
-             output << "Try again, please enter a year in data (2005-2024)" << endl;
+             cout << "Try again, please enter a year in data (2005-2024)" << endl;
              continue;
             }
-             output << "\nOkay, now the year of the other season (2005-2024):  ";
+             cout << "\nOkay, now the year of the other season (2005-2024):  ";
              if (!(cin >> year2)) {
              cin.clear();
              cin.ignore(1000, '\n');
-             output << "Try again, please enter a year in data (2005-2024)" << endl;
+             cout << "Try again, please enter a year in data (2005-2024)" << endl;
              continue;
             }
              season1 = findUserSeason(cowboysStats, entries, year1);
              season2 = findUserSeason(cowboysStats, entries, year2);
 
              if (season1 == -1 || season2 == -1) {
-                output << "One of the years you entered is not in the data, try again." << endl;
+                cout << "One of the years you entered is not in the data, try again." << endl;
                 continue;
              }
 
              if (season1 == season2) {
-                output << "You entered the same year, try again." << endl;
+                cout << "You entered the same year, try again." << endl;
                 continue;
              }
              break;     
@@ -260,7 +386,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
         << "*************\n";
         output << "*" << setw(103) << "*"
         << "\n* ====================== " << cowboysStats[season1].year << " and " << cowboysStats[season2].year
-        << " Comparison Report ===============================" << setw(22) << "*";
+        << " Comparison Report ===============================" << setw(16) << "*";
         output << "\n*" << setw(103) << "*"
         << "\n*                                                                                                      *";
         output << left;
@@ -535,7 +661,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     }
     output << "**********************************************\n";
         output << "*" << setw(45) << "*"
-        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
+        << "\n* ===== Dallas Cowboys Seasons By PPG =====" << setw(2) << "*";
         output << "\n*" << setw(45) << "*"
         << "\n*" << setw(45) << "*";
         output << left;
@@ -547,6 +673,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
              << endl;
         }
          output << "**********************************************\n";
+         return output.str();
     }
 
     string selectionSortOppPpg(SeasonStats cowboysStats[], int entries) {
@@ -568,20 +695,20 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
-    output << "**********************************************\n";
-        output << "*" << setw(45) << "*"
-        << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
-        output << "\n*" << setw(45) << "*"
-        << "\n*" << setw(45) << "*";
+    output << "*************************************************\n";
+        output << "*" << setw(48) << "*";
+        output << "\n* ===== Dallas Cowboys Seasons By OPP PPG ===== *";
+        output << "\n*" << setw(48) << "*"
+        << "\n*" << setw(48) << "*";
         output << left;
-        output << "\n* |Year|                |OPP PPG|" << "            *" << endl;
+        output << "\n* |Year|                |OPP PPG|" << "               *" << endl;
 
         for(int i = 0; i < entries; ++i) {
-            output << "* " << setw(24) << cowboysStats[i].year << setw(19) << cowboysStats[i].oppPpg
-            << setw(22) << "*"
+            output << "* " << setw(24) << cowboysStats[i].year << setw(22) << cowboysStats[i].oppPpg
+            << setw(25) << "*"
              << endl;
         }
-         output << "**********************************************\n";
+         output << "*************************************************\n";
 
          return output.str();
     }
@@ -589,25 +716,29 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     string selectionSortPlayoffSuccess(SeasonStats cowboysStats[], int entries) {
     
     stringstream output;
-    int startScan, minIndex, i;
+    int startScan, maxIndex, i;
 
     for(startScan = 0; startScan < (entries - 1); startScan++) {
-        minIndex = startScan;
+        maxIndex = startScan;
 
         for(i = startScan + 1; i < entries; i++) {
 
             //using convertPlayoffSuccess to convert strings to integers because sorting by 
             //numbers is easier
             int current = convertPlayoffSuccess(cowboysStats[i].playoffSuccess);
-            int best = convertPlayoffSuccess(cowboysStats[minIndex].playoffSuccess);
+            int best = convertPlayoffSuccess(cowboysStats[maxIndex].playoffSuccess);
+
+            //treats invalid as worst success
+            if (current < 0) current = 0;
+            if (best < 0) best = 0;
 
             if (current > best) {
-                minIndex = i;
+                maxIndex = i;
             }
         }
 
-        SeasonStats temp = cowboysStats[minIndex];
-        cowboysStats[minIndex] = cowboysStats[startScan];
+        SeasonStats temp = cowboysStats[maxIndex];
+        cowboysStats[maxIndex] = cowboysStats[startScan];
         cowboysStats[startScan] = temp;
         
     }
@@ -626,6 +757,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
          output << "* Hope to see a Superbowl soon :(                       *\n";
          output << "*********************************************************\n";
+         return output.str();
     }
 
     void addSeasonToData(SeasonStats cowboysStats[], int& entries) {
@@ -693,7 +825,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     getline(cin, newSeason.playoffSuccess);
     
     playoffSuccess = convertPlayoffSuccess(newSeason.playoffSuccess);
-
+cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
     if (playoffSuccess == -1) {
         cout << "Input is not one of the specified playoff outcomes stated above, check for typos\n";
         continue;
@@ -780,6 +912,65 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
         outFile.close();
     }
+
+    void printMainMenu() {
+    cout << "\n*****************************************************\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*       =====Dallas Cowboy's Stats Sorter=====      *\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 1. View All Season Stats" << setw(28) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 2. View Individual Season" << setw(27) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 3. Compare 2 Seasons" << setw(32) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 4. Add New Season" << setw(35) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 5. Reports & Rankings (Submenu)" << setw(21) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 6. Quit" << setw(45) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*****************************************************\n";
+}
+
+void printSubMenu() {
+    cout << "\n*****************************************************\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*         =====Reports & Rankings Menu=====         *\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 1. Sort by Wins" << setw(37) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 2. Sort by Losses" << setw(35) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 3. Sort by Ties" << setw(37) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 4. Sort by PPG" << setw(38) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 5. Sort by OPP PPG" << setw(34) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 6. Sort by Playoff Success" << setw(26) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "* 7. Return to Main Menu" << setw(30) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*****************************************************\n\n";
+}
    
+// takes string that is returned from the stringstream (output) and asks if user wants to save this to their file
+// if yes, it uses the passed string (data) and adds it to user file
+void promptToSaveData(const string data) {
+    char choice;
+    cout << "Would you like to save this data to your personal file? (Y/N)\n";
+    cin >> choice;
+    choice = toupper(choice); // toupper converts lowercase into uppercase incase user uses lowercase
+
+    if (choice == 'Y') {
+        saveToUserFile(data);
+    }
+
+    cin.ignore(1000,'\n'); // clears garbage
+
+}
  
           
