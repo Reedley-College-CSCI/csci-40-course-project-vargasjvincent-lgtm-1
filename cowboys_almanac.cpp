@@ -56,7 +56,7 @@ SeasonStats cowboysStats[MAX_ENTRIES];   // array of structs, holds all the data
 int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST before doing anything else
 //addSeasonToData(cowboysStats, entries);
 
-//cout << selectionSortPlayoffSuccess(cowboysStats, entries);
+cout << selectionSortPlayoffSuccess(cowboysStats, entries);
 
 int choice;
 //cout << selectionSortPlayoffSuccess(cowboysStats, entries);
@@ -100,8 +100,6 @@ while (true) {
 
         case 4: {
             addSeasonToData(cowboysStats, entries);
-            cin.clear();
-            cin.ignore(1000, '\n');
             break;
         }
 
@@ -296,6 +294,9 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
 
     string viewOneSeason(SeasonStats cowboysStats[], int entries) {
         
+        cin.clear();
+        cin.ignore(1000, '\n');
+
         stringstream output;
         int userYear;
         int userSeasonIndex;
@@ -306,7 +307,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
         userSeasonIndex = findUserSeason(cowboysStats, entries, userYear);
 
         if (userSeasonIndex == -1) {
-            return string("That season is currently not in the database\n");
+            return "That season is currently not in the database\n";
         }
     
        output << left;
@@ -324,7 +325,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
        output << setw(45) << "*" << "*";
        output << setw(24) << "\n* OPP PPG -->" << setw(22) << cowboysStats[userSeasonIndex].oppPpg << "*\n";
        output << setw(45) << "*" << "*";
-       output << "\n* Playoff Success -->" << setw(23) << cowboysStats[userSeasonIndex].playoffSuccess << " *\n";
+       output << setw(24) << "\n* Playoff Success -->" << cowboysStats[userSeasonIndex].playoffSuccess << " *\n";
        output << setw(45) << "*" << "*";
        output << "\n**********************************************\n";
        
