@@ -94,6 +94,48 @@ Would you like to save this data to your personal file? (Y/N)
 Pass/Fail: F
 Explanation: 1999 printed at the top of the list even though they missed the playoffs that year so it should actually be at the bottom of the list
 
+TC-04
+Description: Adding new season then calling sort playoff success
+Input: 4 1999 10 5 0 24.9 20.3 Missed Playoffs 5 6
+Expected Output: Here is your comparasion report!
+|Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|
+2007      13        3         0         28.4         20.3         Lost Divisional Round              
+2023      12        5         0         29.9         18.5         Lost Wild Card Round  
+Actual Output: 
+*********************************************************
+*                                                       *
+* ===== Dallas Cowboys Seasons By Playoff Success ===== *
+*                                                       *
+*                                                       *
+* |Year|                |PLAYOFF SUCCESS|               *
+* 2022                Lost Divisional Round             *                 
+* 2018                Lost Divisional Round             *                 
+* 2016                Lost Divisional Round             *                 
+* 2014                Lost Divisional Round             *                 
+* 2009                Lost Divisional Round             *                 
+* 2007                Lost Divisional Round             *                 
+* 2023                Lost Wild Card Round              *                 
+* 2021                Lost Wild Card Round              *                 
+* 2006                Lost Wild Card Round              *                 
+* 2015                Missed Playoffs                   *                 
+* 2017                Missed Playoffs                   *                 
+* 2013                Missed Playoffs                   *                 
+* 2012                Missed Playoffs                   *                 
+* 2011                Missed Playoffs                   *                 
+* 2010                Missed Playoffs                   *                 
+* 2020                Missed Playoffs                   *                 
+* 2008                Missed Playoffs                   *                 
+* 2019                Missed Playoffs                   *                 
+* 2024                Missed Playoffs                   *                 
+* 2005                Missed Playoffs                   *                 
+* 1999                Missed Playoffs                   *                 
+* Hope to see a Superbowl soon :(                       *
+*********************************************************
+Would you like to save this data to your personal file? (Y/N)
+Pass/Fail: P
+Explanation: In the txt files the strings somehow accumulated extra whitespace at the end making them 
+not match with specified strings in the program, therefor making all playoff success print in year order 
+instead of order of highest to lowest success. So I fixed the whitespace.
 
 
 

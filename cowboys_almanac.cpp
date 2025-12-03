@@ -56,7 +56,7 @@ SeasonStats cowboysStats[MAX_ENTRIES];   // array of structs, holds all the data
 int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST before doing anything else
 //addSeasonToData(cowboysStats, entries);
 
-cout << selectionSortPlayoffSuccess(cowboysStats, entries);
+//cout << selectionSortPlayoffSuccess(cowboysStats, entries);
 
 int choice;
 //cout << selectionSortPlayoffSuccess(cowboysStats, entries);
@@ -100,6 +100,8 @@ while (true) {
 
         case 4: {
             addSeasonToData(cowboysStats, entries);
+            cin.clear();
+            cin.ignore(1000, '\n');
             break;
         }
 
