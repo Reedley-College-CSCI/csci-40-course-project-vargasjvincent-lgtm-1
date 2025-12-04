@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
+#include <iomanip>
 #include <string>
 #include <sstream>
 using namespace std;
@@ -46,30 +46,28 @@ void saveToCowboysData(SeasonStats cowboysStats[], int entries); // saves season
 void printMainMenu(); // function to print main menu, practical for being used in loop to prompt user 
 void printSubMenu(); // function to print sub menu, practical for being used in loop to prompt user
 void promptToSaveData(const string data); // function to ask user if they want to save data to their file, applicable in main menu
+void printUserFile(); // function that prints everything in users_collection.txt so user can see what is in their saved file
 
+const int MAX_ENTRIES = 100;
 
 int main() {
 
-
-const int MAX_ENTRIES = 100;
 SeasonStats cowboysStats[MAX_ENTRIES];   // array of structs, holds all the data
-int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST before doing anything else
-//addSeasonToData(cowboysStats, entries);
 
-cout << selectionSortPlayoffSuccess(cowboysStats, entries);
+int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST before doing anything else
 
 int choice;
-//cout << selectionSortPlayoffSuccess(cowboysStats, entries);
+
 
 while (true) {
     printMainMenu();
     
     cin >> choice;
 
-    if (choice < 1 || choice > 6) {    // this is for when user has invalid input
+    if (choice < 1 || choice > 7) {    // this is for when user has invalid input
         cin.clear();
         cin.ignore(1000, '\n');
-        cout << "Invalid choice, must be 1-6\n";
+        cout << "\nInvalid choice, must be 1-6\n";
         continue;
     }
 
@@ -161,7 +159,7 @@ while (true) {
                     }
 
                     default: {
-                        cout << "Not a valid option\n";
+                        cout << "\nNot a valid option\n";
                     }
                 }
             }
@@ -170,12 +168,17 @@ while (true) {
         }
 
         case 6: {
-            cout << "Goodbye! Hope you made good use of the Dallas Cowboys Stats Sorter!\n";
+            printUserFile();
+            break;
+        }
+
+        case 7: {
+            cout << "\nGoodbye! Hope you made good use of the Dallas Cowboys Stats Sorter!\n";
             return 0;
         }
 
         default:
-        cout << "Not a valid option\n";
+        cout << "\nNot a valid option\n";
     }
 }
 
@@ -186,7 +189,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     ifstream inputFile ("cowboys_stats.txt");
 
     if(!inputFile) {
-        cout << "Error, could not open file :(" << endl;
+        cout << "\nError, could not open file :(" << endl;
         return -1;
     }
     int numEntries = 0;
@@ -254,12 +257,12 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
             if (!cin) {  // checks if input is an integer
                 cin.clear();
                 cin.ignore(1000, '\n');
-                cout << "Invalid input, must be a whole number\n";
+                cout << "\nInvalid input, must be a whole number\n";
                 continue;
             }
 
             if (userVal < minVal || userVal > maxVal) { // makes sure input makes sense (cannot have 1093833 wins in season)
-                cout << "Number must be between " << minVal << " and " << maxVal << "\n";
+                cout << "\nNumber must be between " << minVal << " and " << maxVal << "\n";
                 continue;
             }
             return userVal;
@@ -278,12 +281,12 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
             if (!cin) {  // checks if input is an double
                 cin.clear();
                 cin.ignore(1000, '\n');
-                cout << "Invalid input, must be a number\n";
+                cout << "\nInvalid input, must be a number\n";
                 continue;
             }
 
             if (userVal < minVal || userVal > maxVal) { // makes sure input makes sense (cannot have 10938.4 PPG in season)
-                cout << "Number must be between " << minVal << " and " << maxVal << "\n";
+                cout << "\nNumber must be between " << minVal << " and " << maxVal << "\n";
                 continue;
             }
             return userVal;
@@ -301,13 +304,13 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
         int userYear;
         int userSeasonIndex;
 
-        output << "Okay great! You want to view one season individually\n";
+        output << "\nOkay great! You want to view one season individually\n";
         userYear = validateInt("Enter the year of the season you want to view: ", 1960, 2500);
 
         userSeasonIndex = findUserSeason(cowboysStats, entries, userYear);
 
         if (userSeasonIndex == -1) {
-            return "That season is currently not in the database\n";
+            return "\nThat season is currently not in the database\n";
         }
     
        output << left;
@@ -359,26 +362,26 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
              if (!(cin >> year1)) {
              cin.clear();
              cin.ignore(1000, '\n');
-             cout << "Try again, please enter a year in data (2005-2024)" << endl;
+             cout << "\nTry again, please enter a year in data (2005-2024)" << endl;
              continue;
             }
              cout << "\nOkay, now the year of the other season (2005-2024):  ";
              if (!(cin >> year2)) {
              cin.clear();
              cin.ignore(1000, '\n');
-             cout << "Try again, please enter a year in data (2005-2024)" << endl;
+             cout << "\nTry again, please enter a year in data (2005-2024)" << endl;
              continue;
             }
              season1 = findUserSeason(cowboysStats, entries, year1);
              season2 = findUserSeason(cowboysStats, entries, year2);
 
              if (season1 == -1 || season2 == -1) {
-                cout << "One of the years you entered is not in the data, try again." << endl;
+                cout << "\nOne of the years you entered is not in the data, try again." << endl;
                 continue;
              }
 
              if (season1 == season2) {
-                cout << "You entered the same year, try again." << endl;
+                cout << "\nYou entered the same year, try again." << endl;
                 continue;
              }
              break;     
@@ -855,9 +858,9 @@ cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
         cowboysStats[entries] = newSeason;
     }
      entries++;
-
+    
      // saves the new season to the rest of the data in cowboys_stats.txt
-     saveToCowboysData(cowboysStats, entries); 
+     saveToCowboysData(cowboysStats, entries);
 
      cout << "Season " << userYear << " successfully added to data!\n";
      cout << "Here is the data for the new season\n";
@@ -932,9 +935,11 @@ cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
     cout << "*" << setw(53) << "*\n";
     cout << "* 5. Reports & Rankings (Submenu)" << setw(21) << "*\n";
     cout << "*" << setw(53) << "*\n";
-    cout << "* 6. Quit" << setw(45) << "*\n";
+    cout << "* 6. View Your File" << setw(35) << "*\n";
     cout << "*" << setw(53) << "*\n";
-    cout << "*****************************************************\n";
+    cout << "* 7. Quit" << setw(45) << "*\n";
+    cout << "*" << setw(53) << "*\n";
+    cout << "*****************************************************\n\n";
 }
 
 void printSubMenu() {
@@ -974,6 +979,28 @@ void promptToSaveData(const string data) {
 
     cin.ignore(1000,'\n'); // clears garbage
 
+}
+
+void printUserFile() {
+    
+    ifstream inFile("users_collection.txt"); // users saved data is in here
+
+    if (!inFile) {
+        cout << "\nFile does not exist yet, save something to file to view it\n";
+        return;
+    }
+
+    cout << "\n=====Your Saved Data====\n";
+
+    string line;
+    
+    while (getline(inFile, line)) {
+        cout << line << "\n";
+    }
+    
+    cout << "\n====End of saved data====\n";
+
+    inFile.close();
 }
  
           

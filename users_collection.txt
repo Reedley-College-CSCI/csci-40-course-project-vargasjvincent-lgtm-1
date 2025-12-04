@@ -1,0 +1,114 @@
+********************************************************************************************************
+*                                                                                                      *
+* ================ Dallas Cowboys Total Seasons Stats ================                                 *
+*                                                                                                      *
+*                                                                                                      *
+* |Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|                   *
+* 2022      12        5         0         27.5         20.1         Lost Divisional Round              * 
+* 2018      10        6         0         21.2         20.3         Lost Divisional Round              * 
+* 2016      13        3         0         26.3         19.1         Lost Divisional Round              * 
+* 2014      12        4         0         29.2         22           Lost Divisional Round              * 
+* 2009      11        5         0         22.6         15.6         Lost Divisional Round              * 
+* 2007      13        3         0         28.4         20.3         Lost Divisional Round              * 
+* 2023      12        5         0         29.9         18.5         Lost Wild Card Round               * 
+* 2021      12        5         0         31.2         21.1         Lost Wild Card Round               * 
+* 2006      9         7         0         26.6         21.9         Lost Wild Card Round               * 
+* 2015      4         12        0         17.2         23.4         Missed Playoffs                    * 
+* 2017      9         7         0         22.1         20.8         Missed Playoffs                    * 
+* 2013      8         8         0         27.4         27           Missed Playoffs                    * 
+* 2012      8         8         0         23.5         25           Missed Playoffs                    * 
+* 2011      8         8         0         23.1         21.7         Missed Playoffs                    * 
+* 2010      6         10        0         24.6         27.3         Missed Playoffs                    * 
+* 2020      6         10        0         24.7         27.5         Missed Playoffs                    * 
+* 2008      9         7         0         22.6         22.8         Missed Playoffs                    * 
+* 2019      8         8         0         27.1         20.1         Missed Playoffs                    * 
+* 2024      7         10        0         20.6         27.5         Missed Playoffs                    * 
+* 2005      9         7         0         20.3         19.3         Missed Playoffs                    * 
+* 1999      10        5         0         24.9         20.3         Missed Playoffs                    * 
+********************************************************************************************************
+
+
+Here is your comparison report!
+ 
+********************************************************************************************************
+*                                                                                                      *
+* ====================== 2006 and 2016 Comparison Report ===============================               *
+*                                                                                                      *
+*                                                                                                      *
+* |Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|                   *
+* 2006      9         7         0         26.6         21.9         Lost Wild Card Round               * 
+* 2016      13        3         0         26.3         19.1         Lost Divisional Round              * 
+********************************************************************************************************
+
+More in depth analysis:
+In 2016 the Cowboys had 4 more win/wins than in  2006
+
+In 2006 the Cowboys had 4 more loss/losses than in  2016
+
+In 2006 the Cowboys had the same amount of ties as in 2016
+
+In 2006 the Cowboys averaged 0.3 more PPG than in  2016
+
+In 2006 the Cowboys averaged 2.8 more OPP PPG than in  2016
+
+The Cowboys advanced farther in the playoffs in  2016 than in 2006
+
+
+**********************************************
+*                                            *
+* ===== Dallas Cowboys Seasons By PPG ===== *
+*                                            *
+*                                            *
+* |Year|                 |PPG|               *
+* 2021                    31.2               *                     
+* 2023                    29.9               *                     
+* 2014                    29.2               *                     
+* 2007                    28.4               *                     
+* 2022                    27.5               *                     
+* 2013                    27.4               *                     
+* 2019                    27.1               *                     
+* 2006                    26.6               *                     
+* 2016                    26.3               *                     
+* 1999                    24.9               *                     
+* 2020                    24.7               *                     
+* 2010                    24.6               *                     
+* 2012                    23.5               *                     
+* 2011                    23.1               *                     
+* 2009                    22.6               *                     
+* 2008                    22.6               *                     
+* 2017                    22.1               *                     
+* 2018                    21.2               *                     
+* 2024                    20.6               *                     
+* 2005                    20.3               *                     
+* 2015                    17.2               *                     
+**********************************************
+
+********************************************************************************************************
+*                                                                                                      *
+* ================ Dallas Cowboys Total Seasons Stats ================                                 *
+*                                                                                                      *
+*                                                                                                      *
+* |Year|   |W|       |L|       |T|       |PPG|       |OPP PPG|     |Playoff Results|                   *
+* 2022      12        5         0         27.5         20.1         Lost Divisional Round              * 
+* 2018      10        6         0         21.2         20.3         Lost Divisional Round              * 
+* 2016      13        3         0         26.3         19.1         Lost Divisional Round              * 
+* 2014      12        4         0         29.2         22           Lost Divisional Round              * 
+* 2009      11        5         0         22.6         15.6         Lost Divisional Round              * 
+* 2007      13        3         0         28.4         20.3         Lost Divisional Round              * 
+* 2023      12        5         0         29.9         18.5         Lost Wild Card Round               * 
+* 2021      12        5         0         31.2         21.1         Lost Wild Card Round               * 
+* 2006      9         7         0         26.6         21.9         Lost Wild Card Round               * 
+* 2015      4         12        0         17.2         23.4         Missed Playoffs                    * 
+* 2017      9         7         0         22.1         20.8         Missed Playoffs                    * 
+* 2013      8         8         0         27.4         27           Missed Playoffs                    * 
+* 2012      8         8         0         23.5         25           Missed Playoffs                    * 
+* 2011      8         8         0         23.1         21.7         Missed Playoffs                    * 
+* 2010      6         10        0         24.6         27.3         Missed Playoffs                    * 
+* 2020      6         10        0         24.7         27.5         Missed Playoffs                    * 
+* 2008      9         7         0         22.6         22.8         Missed Playoffs                    * 
+* 2019      8         8         0         27.1         20.1         Missed Playoffs                    * 
+* 2024      7         10        0         20.6         27.5         Missed Playoffs                    * 
+* 2005      9         7         0         20.3         19.3         Missed Playoffs                    * 
+* 1999      10        5         0         24.9         20.3         Missed Playoffs                    * 
+********************************************************************************************************
+
