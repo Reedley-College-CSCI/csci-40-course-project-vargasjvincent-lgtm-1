@@ -58,7 +58,7 @@ int entries = readStats(cowboysStats, MAX_ENTRIES); // reads in data FIRST befor
 
 int choice;
 
-
+// switch case that operates main menu
 while (true) {
     printMainMenu();
     
@@ -182,6 +182,7 @@ while (true) {
     }
 }
 
+
 return 0;
 }
 
@@ -233,6 +234,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
          output << "*******************************************************************************************" 
          << "*************\n";
 
+         output << right;
          return output.str();
     }
 
@@ -305,14 +307,14 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
         int userSeasonIndex;
 
         output << "\nOkay great! You want to view one season individually\n";
-        userYear = validateInt("Enter the year of the season you want to view: ", 1960, 2500);
+        userYear = validateInt("Enter the year of the season you want to view (2005-2024 or any season added by you): ", 1960, 2500);
 
         userSeasonIndex = findUserSeason(cowboysStats, entries, userYear);
 
         if (userSeasonIndex == -1) {
             return "\nThat season is currently not in the database\n";
         }
-    
+       //printing data in data table
        output << left;
        output << "**********************************************\n";
        output << setw(45) << "*" << "*\n";
@@ -332,6 +334,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
        output << setw(45) << "*" << "*";
        output << "\n**********************************************\n";
        
+       output << right;
        return output.str();
     }
 
@@ -387,6 +390,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
              break;     
         }
 
+        //printing data in data table
         output << "\nHere is your comparison report!\n " << endl;
         output << "*******************************************************************************************" 
         << "*************\n";
@@ -519,6 +523,7 @@ int readStats (SeasonStats cowboysStats[], const int MAX_ENTRIES) {
     }
 output << endl;
 
+output << right;
 return output.str();
 }
 
@@ -541,6 +546,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
+    //printing data in data table
     output << "**********************************************\n";
         output << "*" << setw(45) << "*"
         << "\n* ===== Dallas Cowboys Seasons By Wins =====" << setw(2) << "*";
@@ -556,6 +562,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
          output << "**********************************************\n";
 
+         output << right;
          return output.str();
     }
 
@@ -578,6 +585,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
+    //printing data in data table
     output << "************************************************\n";
         output << "*" << setw(47) << "*"
         << "\n* ===== Dallas Cowboys Seasons By Losses ===== *";  //<< setw(2) << "*";
@@ -593,6 +601,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
          output << "************************************************\n";
 
+         output << right;
          return output.str();
     }
 
@@ -627,6 +636,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     }
 
     else if (allTimeTies > 0) {
+    //printing data in data table
     output << "**********************************************\n";
         output << "*" << setw(45) << "*"
         << "\n* ===== Dallas Cowboys Seasons By Ties =====" << setw(2) << "*";
@@ -643,6 +653,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
          output << "**********************************************\n";
     }
 
+    output << right;
     return output.str();
     }
 
@@ -665,6 +676,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
+    //printing data in data table
     output << "**********************************************\n";
         output << "*" << setw(45) << "*"
         << "\n* ===== Dallas Cowboys Seasons By PPG =====" << setw(2) << "*";
@@ -679,6 +691,8 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
              << endl;
         }
          output << "**********************************************\n";
+         
+         output << right;
          return output.str();
     }
 
@@ -701,6 +715,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
+    //printing data in data table
     output << "*************************************************\n";
         output << "*" << setw(48) << "*";
         output << "\n* ===== Dallas Cowboys Seasons By OPP PPG ===== *";
@@ -716,6 +731,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
          output << "*************************************************\n";
 
+         output << right;
          return output.str();
     }
 
@@ -748,6 +764,7 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         cowboysStats[startScan] = temp;
         
     }
+    //printing data in data table
     output << "*********************************************************\n";
         output << "*" << setw(56) << "*"
         << "\n* ===== Dallas Cowboys Seasons By Playoff Success =====" << setw(2) << "*";
@@ -763,6 +780,8 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
         }
          output << "* Hope to see a Superbowl soon :(                       *\n";
          output << "*********************************************************\n";
+         
+         output << right;
          return output.str();
     }
 
@@ -831,9 +850,9 @@ string selectionSortWins(SeasonStats cowboysStats[], int entries) {
     getline(cin, newSeason.playoffSuccess);
     
     playoffSuccess = convertPlayoffSuccess(newSeason.playoffSuccess);
-cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
+
     if (playoffSuccess == -1) {
-        cout << "Input is not one of the specified playoff outcomes stated above, check for typos\n";
+        cout << "\nInput is not one of the specified playoff outcomes stated above, check for typos\n";
         continue;
     }
         break; // valid
@@ -857,32 +876,34 @@ cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
     else { // adds new season at the end of array of structs
         cowboysStats[entries] = newSeason;
     }
-     entries++;
+     entries++; // increments entries because there is now 1 more season in data
     
      // saves the new season to the rest of the data in cowboys_stats.txt
      saveToCowboysData(cowboysStats, entries);
 
-     cout << "Season " << userYear << " successfully added to data!\n";
-     cout << "Here is the data for the new season\n";
+     //printing data in data table
+     cout << "\nSeason " << userYear << " successfully added to data!\n";
+     cout << "\nHere is the data for the new season\n";
      cout << left;
-       cout << "**********************************************\n";
-       cout << setw(45) << "*" << "*\n";
-       cout << setw(18) << "*" << newSeason.year  << setw(23) << "   Stats" << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* Wins -->" << setw(22) <<  newSeason.wins << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* Losses -->" << setw(22) <<  newSeason.losses << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* Ties -->" << setw(22) <<  newSeason.ties << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* PPG -->" << setw(22) <<  newSeason.ppg << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* OPP PPG -->" << setw(22) << newSeason.oppPpg << "*\n";
-       cout << setw(45) << "*" << "*";
-       cout << setw(24) << "\n* Playoff Success -->" << newSeason.playoffSuccess << " *\n";
-       cout << setw(45) << "*" << "*";
-       cout << "\n**********************************************\n";
+       cout << "******************************************************\n";
+       cout << setw(53) << "*" << "*\n";
+       cout << setw(18) << "*" << newSeason.year  << setw(31) << "   Stats" << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* Wins -->" << setw(30) <<  newSeason.wins << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* Losses -->" << setw(30) <<  newSeason.losses << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* Ties -->" << setw(30) <<  newSeason.ties << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* PPG -->" << setw(30) <<  newSeason.ppg << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* OPP PPG -->" << setw(30) << newSeason.oppPpg << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << setw(24) << "\n* Playoff Success -->" << setw(30) << newSeason.playoffSuccess << "*\n";
+       cout << setw(53) << "*" << "*";
+       cout << "\n******************************************************\n";
 
+       cout << right;
     }
 
     void saveToUserFile(const string& dataToSave) {
@@ -920,6 +941,7 @@ cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
     }
 
     void printMainMenu() {
+    cout << right;
     cout << "\n*****************************************************\n";
     cout << "*" << setw(53) << "*\n";
     cout << "*       =====Dallas Cowboy's Stats Sorter=====      *\n";
@@ -943,6 +965,7 @@ cout << "NEW PLAYOFF SUCCESS " << newSeason.playoffSuccess << endl;
 }
 
 void printSubMenu() {
+    cout << right;
     cout << "\n*****************************************************\n";
     cout << "*" << setw(53) << "*\n";
     cout << "*         =====Reports & Rankings Menu=====         *\n";
@@ -1003,4 +1026,3 @@ void printUserFile() {
     inFile.close();
 }
  
-          

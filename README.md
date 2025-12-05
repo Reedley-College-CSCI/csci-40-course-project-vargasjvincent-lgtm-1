@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/7mdzU3H2)
 # CS1 Final Project - Dallas Cowboys Stat Finder
-MENTION <SSTREAM>
+
 ## 1. Overview
 - What problem does your project solve?  
 Stats are easily accessible on the internet but when it comes to comparing certain stats across seasons, websites can become lackluster, there is not a great way to view and pull up different stats from different seasons. This project will give the user the ability to do just that. Another problem is having an easy way to compare data of your choosing, a way to do this is to have multiple tabs open from an online database but it becomes tedious switching between each tab to compare data. This project provides a solution by giving the user the option to save it to a user file where they can view all their desired data on one single file making it easy to make comparasions.
@@ -185,18 +185,37 @@ instead of order of highest to lowest success. So I fixed the whitespace.
 - **Include a link to your required video demonstration** showcasing how the project works (**3-7 minutes**). 
     Make sure it shareable without approval needed.
 
+    https://www.youtube.com/watch?v=fsEKTPl7pFg
+
 ---
 
 ## 5. Challenges and Lessons Learned
-- What challenges did you encounter while working on this project?  
+- What challenges did you encounter while working on this project?  (MENTIONS <SSTREAM>)
+The biggest challenge I encountered on this project was configuring the users file that can save the data 
+that they please. At first I had all my functions that print data tables as voids, the problem with this is 
+that the voids do not return anything so I did not know how to get the data tables into the users file. After
+some research and thinking I changed the void functions into string functions so that they return a string
+that I can pass to a function that copies the string into the users file (saveToUserFile function). This is 
+also where I learned about the directory <sstream> that allows you to create stringstream variables that 
+you can stream strings into, like pouring strings into a bucket that catches all the strings and holds them
+together in one place. I used one stringstream variable for each function that has a data table, I streamed all the 
+strings that compose the data tables into the stringstream variable and then return that variable at the end of the
+function (a string). Now I could pass this string to the users file. 
 - What key lessons did you learn about programming and problem-solving?  
-
+Some key lessons I learned about programming and problem solving is to code less, what I mean is 
+to really brainstorm and think about what you are trying to do first before writing code. 
+It will save alot of time if you attack the problem with a plan and knowing what actually
+needs to be done to solve the problem. 
 ---
 
 ## 6. Future Improvements
 - If you had more time, what changes or enhancements would you make?  
+If I had more time I would want to bedazzle the data tables more, make them more
+elaborate and beautiful, that is just aesthetic stuff though. Programming wise I 
+would make better input validation helper functions that would probably make the rest
+of the project easier to code. I would also consider a different approach to the way 
+I stored playoff success, I stored it as a string but this proved to cause problems
+for input validation and I had to convert them to integers often so I could compare them.
+Besides that I would add more data to SeasonStats struct so the user has more to look at
+and can better gauge how each season went because there is more indicators available.
 
-STUDY BINARY SEARCH
-PRINT ALGORITHMS AND STUDY
-IF IT IS SORTED USE BINARY SEARCH
-USE LAB INSTRUCTIONS? PUT IN CHAT? 
