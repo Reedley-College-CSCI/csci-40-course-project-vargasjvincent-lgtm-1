@@ -1,4 +1,4 @@
-// CSCI-40 Final Project
+// CSCI-40 Final Project Cowboys Stats Sorter
 // Author: Vincent Vargas
 
 /* 
